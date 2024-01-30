@@ -1,0 +1,128 @@
+Name: Martha Ann Williams
+USC NetID: marthaan
+CS 455 PA4
+Fall 2023
+
+----------------------------------------------
+CERTIFY IT'S YOUR WORK
+
+"I certify that the work submitted for this assignment does not
+violate USC's student conduct code.  In particular, the work is my
+own, not a collaboration, and does not involve code created by other
+people or AI software, except for the the resources explicitly mentioned
+in the CS 455 Course Syllabus.  And I did not share my solution or part
+of it with other students in the course."
+
+Initial below to "sign" the above statement:
+
+MWM
+----------------------------------------------
+ACKNOWLEDGE ANY OUTSIDE SOURCES
+
+List here any code you submitted for this assignment that was written
+with significant help of a course staff member, or code used from the
+textbook.  Be specific about what methods or algorithms are involved,
+and what sections of the textbook are involved (if applicable): [you do
+not need to list any of the code that we wrote for the assignment,
+i.e., the contents of the starter files for the assignment]
+
+Received OH help from Professor Bono mostly regarding AnagramDictionary.java,
+along with some general coding help from Suvi and Sathiya.
+
+----------------------------------------------
+KNOWN BUGS or LIMITATIONS:
+
+
+
+----------------------------------------------
+DESCRIPTION OF YOUR CLASS DESIGN AND ALGORITHMS AND DATA STRUCTURES USED:
+
+Other than corresponding unit test files, no additional class files
+were added other than what was required under the "assignment files" section (in PA4 description).
+A Comparator class was defined within WordFinder.java.
+
+
+
+APPROACH TO HOW I SOLVED THE PROBLEM:
+For the second approach given in the PA4 description, it asked us to preprocess an anagram dictionary,
+find all subsets for a multiset (i.e., a Rack), and then match these subsets to the dictionary to
+get all valid subsets of the multiset (subsets that are also in the dictionary). This should be
+done as efficiently as possible.
+I used the following data structures and algorithms in my classes for this approach (test classes
+not described):
+
+AnagramDictionary.java:
+I chose to use a HashMap representation for an AnagramDictionary / to preprocess an AnagramDictionary
+because order is not important, and it can use its keys (unique, alphabetically sorted words) to
+efficiently lookup its values (HashSet of all valid subsets of that key)
+While an ArrayList<String> could have been used instead of HashSet here, this would be less efficient,
+particularly when searching for a word to see if it is already in our dictionary (contains vs. get).
+Using a HashSet was also simpler for IllegalDictionaryException error-checking, since the add method
+returns a boolean.
+
+Rack.java:
+I chose to use an ArrayList<String> to represent a Rack, since it will be sorted upon creation and doesn't
+require any other values/objects to be mapped to each Rack element. I originally considered using a Map to
+store each letter/score pair, but ultimately decided this storage was unnecessary since we only require
+scores in WordFinder, not Rack. Methods to obtain all subsets and all valid subsets are found in this class,
+both of which are vital to our second approach. I chose to create a wrapper method for the provided
+allSubsets() method since that method doesn't correspond directly to a Rack object.
+
+ScoreTable.java:
+I chose to use an integer array to represent a ScoreTable rather than an ArrayList<Integer>, since it only
+needs to have a fixed size of 26 (MAX_LETTERS, total letters in the English alphabet), meaning no resizing should
+be required and access is more efficient via direct access. These scores are used in the WordFinder display,
+aiding in efficient sorting of word/score pairs in order to be printed correctly.
+
+WordFinder.java:
+Essentially displays our approach. I used args to determine which File object will be used to create the anagram
+dictionary, since using a dictionary other than sowpods.txt is not required. I chose to use a Scanner to
+obtain user input (String of letters) to create the Rack, as it allows for not only getting the user input,
+but also correct looping to keep displaying output for each given Rack. I used a try-catch block to handle both
+FileNotFoundException and IllegalDictionaryException exceptions, catching both in order to not print a stack trace
+for each.
+
+
+INFO ABOUT HOW MY CLASS DESIGN RELATES TO MY APPROACH (also related to how I solved the problem above):
+Overall, as few get/set methods were used as possible to maximize encapsulation, even though implementing
+some could have been simple to use in testing, main, etc.
+For all the following classes, any private instance variables and private methods were declared as private
+so that they can only be accessed within the same class file (encapsulated) and won't be redundantly explained
+below.
+I encapsulated the other following data structures and algorithms in the following classes:
+
+AnagramDictionary.java:
+By preprocessing our dictionary, we are organizing this data anagramDict, which is private. Using such a structure
+hides/encapsulates how the organizing is actually done, since there is no "get" method to access
+anagramDict itself. Similar logic can be said for the other public methods in this class since it uses
+anagramDict based on letter sets, and anagramDict uses abstraction minimize complexity.
+
+Rack.java:
+The two private static functions contribute to encapsulation, since they do not access any class instances
+to begin with. The public getSubsets() method employs these static functions to get the result, but
+hides their implementation from the client.
+
+ScoreTable.java:
+While getLetterScore() is only used in our ScoreTableTester.java, and could otherwise be implemented as
+private to further hide implementation details for getWordScore(), a client may still want to get the
+score of only a particular letter, and there are no iterative steps for this method as opposed to
+getWordScore(), so it is more efficient.
+
+WordFinder.java:
+This class overall encapsulates how and when each step of our program is executed / encapsulates how the different
+parts of our program work together. It also encapsulates the information used in our main that was obtained from
+command-line arguments any necessary error-handling.
+
+
+----------------------------------------------
+ANY OTHER NOTES FOR THE GRADER:
+
+Originally had trouble only with the submission grader grabbing an extra empty word for created subsets,
+even though running it myself both in IntelliJ and Vocareum produced the exact output expected in the
+submission tests. It should be fixed now, but Suvi and Sathiya had trouble as to why my output in the
+submission would be different than my output when running the program and wanted to note if any other
+related autograding errors come up this could be why (though it should be fixed now).
+
+
+
+
